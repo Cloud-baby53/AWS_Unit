@@ -51,4 +51,23 @@ git commit -m "second commit of dev branch"
 git push -u origin dev
 ```
 
+このpushしたブランチは、first commitのコミットからsecond commit of dev branchのコミットを作成したため、正常にmergeされた
+しかし、WebサイトでRemote Repositoryのdevブランチをmasterブランチに対してpull requestを出すと下記のエラーが発生する
+> This branch has conflicts that must be resolved
+
+masterにpull requestを出すときだけ以下の作業を実行してください。
+こうなるとめんどくさいので、Close pull requestとdelete branch を実行して、なかったことにします。
+解決策としては、Remote Repositoryのmaster branch をLocal Repositoryのmaster branch に適応して
+Local Repositoryのmaster branch をdev branchにmergeして修正後に、Remote Repositoryのdev brachにpushする
+
+```bash
+git checkout master
+git pull origin master
+git checkout dev
+git merge master
+// 競合を修正する
+git add .
+git commit -m "second commit of dev branch"
+git push -u origin dev
+```
 branchを作った時のコミットが更新されているものをmasterにmergeしたときに警告されることを確認する
